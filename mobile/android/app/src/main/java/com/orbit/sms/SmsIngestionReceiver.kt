@@ -23,7 +23,20 @@ class SmsIngestionReceiver : BroadcastReceiver() {
                 }
                 val body = message.displayMessageBody ?: continue
                 try {
-                    val parsedData = SmsRegexParser.parse(body)
+                    var parsedData = SmsRegexParser.parse(body)
+                    // Gap 2: Resilience bonus - fallback to bilingual Devanagari/Romanized parser
+                    if (parsedData == null) {
+                        val payload = BilingualSmsParser.parseNepaliMessage(body)
+                        if (payload != null) {
+                            parsedData = org.json.JSONObject().apply {
+                                put("amount", payload.amount)
+                                put("txn_id", payload.txnId)
+                                put("payment_channel", payload.paymentChannel)
+                                put("timestamp", payload.timestamp)
+                                put("sender_name", sender)
+                            }
+                        }
+                    }
                     if (parsedData != null) {
                         transmitDataToGateway(parsedData)
                     }
