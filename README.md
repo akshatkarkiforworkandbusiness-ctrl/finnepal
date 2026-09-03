@@ -16,7 +16,12 @@
   <img src="https://img.shields.io/badge/license-private-lightgrey" alt="license" />
 </p>
 
+### +3 Open Source Contribution
+**New open-source library:** [**tally-bridge-py**](https://github.com/akshatkarkiforworkandbusiness-ctrl/tally-bridge-py) — clean Python utility to format eSewa/Khalti transactions into Tally Prime compliant `voucher.xml` + `master.xml` for Nepal's offline desktop installations. Extracted from [`backend/app/services/tally_service.py`](backend/app/services/tally_service.py) [29,30,335,337]. See usage: `from tally_bridge import generate_tally_voucher_xml` → balanced import payload.
+
 ---
+
+
 
 ## 🗂️ Monorepo layout
 
