@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "ORBIT",
+    "slug": "orbit-fintech",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "orbit",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.orbit.fintech"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B3D2E"
+      },
+      "package": "com.orbit.fintech",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-asset",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash.png",
+          "resizeMode": "cover",
+          "backgroundColor": "#0B3D2E",
+          "imageWidth": 853
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Orbit uses your photo library to set your profile picture. Nothing is uploaded anywhere."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b4772466-19ab-49fe-bcc8-7e403facd7f8"
+      }
+    }
+  }
+}

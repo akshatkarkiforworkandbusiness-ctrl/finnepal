@@ -1,0 +1,52 @@
+# === Root .gitignore for FinTech workspace ===
+# Covers: mobile (Expo/RN), admin (Vite/React), backend (FastAPI)
+
+# --- Environment / secrets ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p8
+*.p12
+*.mobileprovision
+.git-credentials
+
+# --- Node / JS / TS (mobile app + admin) ---
+node_modules/
+dist/
+dist-ssr/
+web-build/
+build/
+*.local
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# --- Expo (mobile app) ---
+.expo/
+.expo-shared/
+*.orig.*
+
+# --- Python / FastAPI (backend) ---
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+alembic/versions/__pycache__/
+*.egg-info/
+.mypy_cache/
+
+# --- Editors / IDE ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.sw?
+
+# --- OS ---
+.DS_Store
+Thumbs.db

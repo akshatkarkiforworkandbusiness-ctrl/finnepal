@@ -1,0 +1,106 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: orbit_postgres
+    environment:
+      POSTGRES_USER: orbit
+      POSTGRES_PASSWORD: orbit_secure_password
+      POSTGRES_DB: orbit_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orbit -d orbit_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - orbit_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: orbit_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - orbit_network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: orbit_backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://orbit:orbit_secure_password@postgres:5432/orbit_db
+      - REDIS_URL=redis://redis:6379/0
+      - JWT_SECRET_KEY=super_secret_jwt_key_2026
+      - ENCRYPTION_KEY=aes256_base64_key_here_must_be_32_bytes_long_keys==
+      - SMTP_HOST=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USERNAME=your_email@gmail.com
+      - SMTP_PASSWORD=your_app_password
+      - SMTP_FROM=Orbit <no-reply@orbit.com>
+      - ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173,http://localhost:8081
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./backend:/app
+      - ./backend/static:/app/static
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - orbit_network
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    container_name: orbit_admin
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000/api/v1
+      - VITE_AUTH_ENABLED=true
+    depends_on:
+      - backend
+    volumes:
+      - ./admin:/app
+      - /app/node_modules
+    command: npm run dev -- --host 0.0.0.0 --port 5173
+    networks:
+      - orbit_network
+
+  mobile-preview:
+    build:
+      context: ./mobile
+      dockerfile: Dockerfile
+    container_name: orbit_mobile_preview
+    ports:
+      - "8081:8081"
+    environment:
+      - EXPO_PUBLIC_API_URL=http://localhost:8000/api/v1
+    depends_on:
+      - backend
+    volumes:
+      - ./mobile:/app
+      - /app/node_modules
+    command: npx expo start --web --host 0.0.0.0 --port 8081
+    networks:
+      - orbit_network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  orbit_network:
+    driver: bridge

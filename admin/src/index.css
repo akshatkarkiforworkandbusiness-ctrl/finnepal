@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 215 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Orbit forest green #0B3D2E */
+    --primary: 162 70% 14%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 215 25% 20%;
+
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 15% 45%;
+
+    --accent: 162 40% 94%;
+    --accent-foreground: 162 70% 14%;
+
+    /* Orbit red #C5161D */
+    --destructive: 358 80% 43%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 20% 90%;
+    --input: 214 20% 90%;
+    --ring: 162 70% 14%;
+
+    --radius: 0.5rem;
+
+    /* Sidebar — deep forest green surface */
+    --sidebar-background: 162 68% 11%;
+    --sidebar-foreground: 160 15% 82%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 162 70% 14%;
+    --sidebar-accent: 162 55% 18%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 162 40% 18%;
+    --sidebar-ring: 160 40% 40%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}

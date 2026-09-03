@@ -1,0 +1,7 @@
+{
+  "cloud_gateway_url": "https://api.orbit.com",
+  "tally_host": "localhost",
+  "tally_port": 9000,
+  "poll_interval_seconds": 30,
+  "credentials_file": "credentials.json"
+}
